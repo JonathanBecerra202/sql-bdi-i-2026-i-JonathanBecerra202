@@ -1,0 +1,76 @@
+erDiagram
+  Facultades {
+    int id PK
+    varchar nombre
+  }
+  Carreras {
+    int id PK
+    varchar nombre
+    int id_facultad FK
+  }
+  Cursos {
+    int id PK
+    varchar nombre
+    int id_facultad FK
+  }
+  Horarios {
+    int id PK
+    varchar dia
+    varchar hora_inicio
+    varchar hora_fin
+  }
+  Salones {
+    int id PK
+    varchar nombre
+    int id_edificio FK
+  }
+  Edificios {
+    int id PK
+    varchar nombre
+  }
+  Calendario_Cursos {
+    int id PK
+    int id_curso FK
+    int id_horario FK
+    int id_salon FK
+    int id_profesor FK
+    int cupo
+  }
+  Cursos_Carreras {
+    int id_curso FK
+    int id_carrera FK
+    int semestre_pensum
+  }
+  Roles {
+    int id PK
+    varchar nombre
+  }
+  Usuarios {
+    int id PK
+    varchar nombre
+    varchar apellido
+    int id_rol FK
+  }
+  Carreras_Estudiantes {
+    int id_carrera FK
+    int id_usuario FK
+    int semestre_actual
+  }
+  Cursos_Estudiantes {
+    int id_calendario FK
+    int id_usuario FK
+  }
+
+  Facultades ||--o{ Carreras : tiene
+  Facultades ||--o{ Cursos : oferta
+  Carreras ||--o{ Cursos_Carreras : incluye
+  Cursos ||--o{ Cursos_Carreras : pertenece
+  Cursos ||--o{ Calendario_Cursos : programa
+  Horarios ||--o{ Calendario_Cursos : define
+  Salones ||--o{ Calendario_Cursos : asigna
+  Edificios ||--o{ Salones : contiene
+  Roles ||--o{ Usuarios : clasifica
+  Usuarios ||--o{ Carreras_Estudiantes : matriculado
+  Carreras ||--o{ Carreras_Estudiantes : tiene
+  Usuarios ||--o{ Cursos_Estudiantes : toma
+  Calendario_Cursos ||--o{ Cursos_Estudiantes : registra
